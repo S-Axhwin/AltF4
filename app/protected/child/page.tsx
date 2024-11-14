@@ -2,7 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { createClient } from "@/utils/supabase/server"
-import { ArrowRight, Plus, QrCode, RefreshCcw, Search, Send } from "lucide-react"
+import { ArrowRight, Link as LinkIcon, Plus, QrCode, RefreshCcw, Search, Send } from "lucide-react"
+import Link from "next/link"
 import { redirect } from "next/navigation"
 
 export default async function Component() {
@@ -19,7 +20,7 @@ export default async function Component() {
     const { data: transaction } = await supabase
         .from("transations")
         .select("*")
-    
+
     return (
         <>
             <Card>
@@ -28,14 +29,17 @@ export default async function Component() {
                     <RefreshCcw className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">${userData.balance}</div>
+                    <div className="text-2xl font-bold">&#8377;{userData.balance}</div>
                     <p className="text-xs text-muted-foreground">Last updated 2 mins ago</p>
                 </CardContent>
             </Card>
             <div className="flex justify-between gap-4">
-                <Button className="flex-1" variant="outline">
-                    <Send className="mr-2 h-4 w-4" /> Request
-                </Button>
+                <Link href={"/protected/child/req"} className="flex-1">
+                    <Button className="w-full" variant="outline">
+
+                        <Send className="mr-2 h-4 w-4" /> Request
+                    </Button>
+                </Link>
                 <Button className="flex-1" variant="outline">
                     <QrCode className="mr-2 h-4 w-4" /> Scan
                 </Button>
@@ -46,9 +50,9 @@ export default async function Component() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {[
-                        { name: "Alice Johnson", amount: "-$50.00", date: "Today" },
-                        { name: "Bob's Cafe", amount: "-$12.50", date: "Yesterday" },
-                        { name: "Carol Smith", amount: "+$25.00", date: "2 days ago" },
+                        { name: "Alice Johnson", amount: "-&#8377;50.00", date: "Today" },
+                        { name: "Bob's Cafe", amount: "-&#8377;12.50", date: "Yesterday" },
+                        { name: "Carol Smith", amount: "+&#8377;25.00", date: "2 days ago" },
                     ].map((transaction, index) => (
                         <div key={index} className="flex items-center justify-between">
                             <div className="flex items-center space-x-4">
@@ -60,7 +64,7 @@ export default async function Component() {
                                     <p className="text-sm text-muted-foreground">{transaction.date}</p>
                                 </div>
                             </div>
-                            <p className={`text-sm font-medium ${transaction.amount.startsWith("+") ? "text-green-500" : ""}`}>
+                            <p className={`text-sm font-medium &#8377;{transaction.amount.startsWith("+") ? "text-green-500" : ""}`}>
                                 {transaction.amount}
                             </p>
                         </div>

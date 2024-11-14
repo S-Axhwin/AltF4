@@ -53,7 +53,7 @@ export default async function EnhancedRequestViewer({ params }: any) {
             <CardHeader className="flex justify-center items-center from-blue-500 to-purple-600 text-white">
                 <Badge
                     variant={status === 'pending' ? 'outline' : status === 'approved' ? 'default' : 'destructive'}
-                    className={`w-fit capitalize text-sm font-medium px-3 py-1 rounded-full ${status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                    className={`w-fit capitalize text-sm font-medium px-3 py-1 rounded-full &#8377;{status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                         status === 'approved' ? 'bg-green-100 text-green-800' :
                             'bg-red-100 text-red-800'
                         }`}
@@ -71,7 +71,7 @@ export default async function EnhancedRequestViewer({ params }: any) {
                         Amount:
                     </span>
                     <span className="text-3xl font-bold text-green-600 dark:text-green-400">
-                        ${amount.toFixed(2)}
+                        &#8377;{amount.toFixed(2)}
                     </span>
                 </div>
                 <div className="flex items-center justify-between">

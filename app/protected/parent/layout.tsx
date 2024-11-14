@@ -24,10 +24,10 @@ const layout = ({ children }: any) => {
                         child: childData
                     };
                     toast("incoming money request", {
-                        description: `${combinedData.amount} request by ${combinedData.child.name}`,
+                        description: `&#8377;{combinedData.amount} request by &#8377;{combinedData.child.name}`,
                         action: {
                             label: "View",
-                            onClick: () => redirect(`/protected/parent/${combinedData.id}`),
+                            onClick: () => redirect(`/protected/parent/&#8377;{combinedData.id}`),
                         },
                     })
                 }
@@ -40,7 +40,6 @@ const layout = ({ children }: any) => {
     }, []);
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold text-center mb-6">Money Management App</h1>
             <div className="w-full max-w-4xl mx-auto">
                 <Card className="w-full shadow-lg rounded-xl overflow-hidden bg-white dark:bg-gray-800">
                     <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">

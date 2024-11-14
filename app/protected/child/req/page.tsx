@@ -21,7 +21,7 @@ export default function EnhancedMoneyRequestForm() {
                 { event: '*', schema: 'public', table: 'money_requests', },
                 async (payload: any) => {
                     toast(payload.new.status + " payment", {
-                        description: `${payload.new.status} of amount ${payload.new.amount}`,
+                        description: `&#8377;{payload.new.status} of amount &#8377;{payload.new.amount}`,
                         duration: 5000,
                     })
                 }
