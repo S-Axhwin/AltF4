@@ -11,11 +11,12 @@ export default async function EnhancedRequestViewer({ params }: any) {
     const { data: request } = await supabase
         .from("money_requests")
         .select("*")
-        .eq("id", id) as any
+        .eq("id", id)
+        .single() as any
     console.log(request);
 
 
-    if (!request || request.length === 0) {
+    if (!request) {
         return (
             <Card className="w-full max-w-md mx-auto shadow-lg rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-800">
                 <CardHeader className="bg-red-500 text-white">
@@ -36,10 +37,11 @@ export default async function EnhancedRequestViewer({ params }: any) {
     const { data: child, error } = await supabase
         .from("children")
         .select("name")
-        .eq("id", request[0].child_id);
+        .eq("id", request.child_id)
+        .single();
     console.log(error);
 
-    const { amount, status, created_at } = request[0];
+    const { amount, status, created_at } = request;
     const formattedDate = new Date(created_at).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
@@ -78,7 +80,7 @@ export default async function EnhancedRequestViewer({ params }: any) {
                         Requester:
                     </span>
                     <span className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                        {child[0].name}
+                        {child?.name}
                     </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -98,7 +100,7 @@ export default async function EnhancedRequestViewer({ params }: any) {
                         <Button
                             formAction={async () => {
                                 "use server"
-                                await confirmPayment(request[0].id)
+                                await confirmPayment(request.id)
                             }}
                             type="submit"
                             className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
@@ -108,7 +110,7 @@ export default async function EnhancedRequestViewer({ params }: any) {
                         <Button
                             formAction={async () => {
                                 "use server"
-                                await rejectPayment(request[0].id)
+                                await rejectPayment(request.id)
                             }}
                             type="submit"
                             variant="destructive"
