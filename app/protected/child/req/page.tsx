@@ -8,7 +8,7 @@ import action from '../action'
 import { useEffect } from "react"
 import { createClient } from '@/utils/supabase/client'
 import { toast } from 'sonner'
-import { Send, DollarSign } from 'lucide-react'
+import { Send, IndianRupee } from 'lucide-react'
 
 export default function EnhancedMoneyRequestForm() {
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function EnhancedMoneyRequestForm() {
                 { event: '*', schema: 'public', table: 'money_requests', },
                 async (payload: any) => {
                     toast(payload.new.status + " payment", {
-                        description: `&#8377;{payload.new.status} of amount &#8377;{payload.new.amount}`,
+                        description: `${payload.new.status} of amount ${payload.new.amount}`,
                         duration: 5000,
                     })
                 }
@@ -41,18 +41,18 @@ export default function EnhancedMoneyRequestForm() {
             <form>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="recipient_id">Recipient</Label>
+                        <Label htmlFor="recipient_name">Recipient</Label>
                         <Input
-                            id="recipient_id"
-                            placeholder="Enter recipient's ID"
-                            name="recipient_id"
+                            id="recipient_name"
+                            placeholder="Enter recipient's name"
+                            name="recipient_name"
                             className="w-full"
                         />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="amount">Amount</Label>
                         <div className="relative">
-                            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                            <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                             <Input
                                 id="amount"
                                 placeholder="Enter amount"

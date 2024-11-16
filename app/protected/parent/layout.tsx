@@ -24,10 +24,10 @@ const layout = ({ children }: any) => {
                         child: childData
                     };
                     toast("incoming money request", {
-                        description: `&#8377;{combinedData.amount} request by &#8377;{combinedData.child.name}`,
+                        description: `${combinedData.amount} request by ${combinedData.child.name}`,
                         action: {
                             label: "View",
-                            onClick: () => redirect(`/protected/parent/&#8377;{combinedData.id}`),
+                            onClick: () => redirect(`/protected/parent/${combinedData.id}`),
                         },
                     })
                 }
