@@ -17,9 +17,10 @@ export default async function Component() {
     // console.log(userData);
     if (!userData) redirect("/protected/parent");
 
-    const { data: transaction } = await supabase
-        .from("transations")
-        .select("*")
+    const { data: transaction, error } = await supabase
+        .from("money_requests")
+        .select("*, recipient_id(name)")
+    // console.log(transaction, error);
 
     return (
         <>
@@ -29,7 +30,7 @@ export default async function Component() {
                     <RefreshCcw className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                    <div className="text-2xl font-bold">&#8377;{userData.balance}</div>
+                    <div className="text-2xl font-bold">${userData.balance}</div>
                     <p className="text-xs text-muted-foreground">Last updated 2 mins ago</p>
                 </CardContent>
             </Card>
@@ -46,25 +47,21 @@ export default async function Component() {
             </div>
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-lg">Recent Transactions</CardTitle>
+                    <CardTitle className="text-lg">Recent Request</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {[
-                        { name: "Alice Johnson", amount: "-&#8377;50.00", date: "Today" },
-                        { name: "Bob's Cafe", amount: "-&#8377;12.50", date: "Yesterday" },
-                        { name: "Carol Smith", amount: "+&#8377;25.00", date: "2 days ago" },
-                    ].map((transaction, index) => (
+                    {transaction?.map((transaction, index) => (
                         <div key={index} className="flex items-center justify-between">
                             <div className="flex items-center space-x-4">
                                 <Avatar className="h-8 w-8">
-                                    <AvatarFallback>{transaction.name[0]}</AvatarFallback>
+                                    <AvatarFallback>{transaction.recipient_id.name.slice(0, 2)}</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <p className="text-sm font-medium leading-none">{transaction.name}</p>
-                                    <p className="text-sm text-muted-foreground">{transaction.date}</p>
+                                    <p className="text-sm font-medium leading-none">{transaction.recipient_id.name}</p>
+                                    <p className="text-sm text-muted-foreground">{transaction.created_at.slice(0, transaction.created_at.indexOf("T"))}</p>
                                 </div>
                             </div>
-                            <p className={`text-sm font-medium &#8377;{transaction.amount.startsWith("+") ? "text-green-500" : ""}`}>
+                            <p className={`text-sm font-medium ${transaction.status == "pending" ? "text-orange-300" : transaction.status == "rejected" ? "text-red-500" : "text-green-500"}`}>
                                 {transaction.amount}
                             </p>
                         </div>

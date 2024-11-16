@@ -27,7 +27,7 @@ export default async (formData: FormData) => {
         .insert({ amount: +amount, child_id: user.id, recipient_id: sender.id });
 
     // const data = formData.getAll("");
-    console.log(error);
-    console.log(data);
+    // console.log(error);
+    // console.log(data);
 
 }
