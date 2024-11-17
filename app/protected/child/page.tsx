@@ -20,7 +20,7 @@ export default async function Component() {
     const { data: transaction, error } = await supabase
         .from("money_requests")
         .select("*, recipient_id(name)")
-    // console.log(transaction, error);
+
 
     return (
         <>
@@ -37,7 +37,6 @@ export default async function Component() {
             <div className="flex justify-between gap-4">
                 <Link href={"/protected/child/req"} className="flex-1">
                     <Button className="w-full" variant="outline">
-
                         <Send className="mr-2 h-4 w-4" /> Request
                     </Button>
                 </Link>
@@ -58,16 +57,17 @@ export default async function Component() {
                                 </Avatar>
                                 <div>
                                     <p className="text-sm font-medium leading-none">{transaction.recipient_id.name}</p>
-                                    <p className="text-sm text-muted-foreground">{transaction.created_at.slice(0, transaction.created_at.indexOf("T"))}</p>
+                                    <p className="text-sm text-muted-foreground leading-none">{transaction.created_at.slice(0, transaction.created_at.indexOf("T"))}</p>
+                                    <div className={`text-sm font-medium ${transaction.status == "pending" ? "text-orange-300/70" : transaction.status == "rejected" ? "text-red-500/70" : " text-green-500/70"} `}>{transaction.status}</div>
                                 </div>
                             </div>
                             <p className={`text-sm font-medium ${transaction.status == "pending" ? "text-orange-300" : transaction.status == "rejected" ? "text-red-500" : "text-green-500"}`}>
-                                {transaction.amount}
+                                &#8377;{transaction.amount}
                             </p>
                         </div>
                     ))}
                 </CardContent>
-            </Card>
+            </Card >
             <div className="grid grid-cols-4 gap-4">
                 {["Food", "Transport", "Entertainment", "More"].map((category) => (
                     <Button key={category} variant="outline" className="h-20 flex-col" size="sm">

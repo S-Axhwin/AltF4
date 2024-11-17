@@ -7,6 +7,7 @@ import {
     LogOut,
     Mail,
     MessageSquare,
+    PhoneIncoming,
     Plus,
     PlusCircle,
     Search,
@@ -34,6 +35,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { signOutAction } from "@/app/actions"
 import { createClient } from "@/utils/supabase/server"
+import Link from "next/link"
 
 export async function AccountDropdown() {
     const supabase = await createClient();
@@ -54,18 +56,19 @@ export async function AccountDropdown() {
                     <DropdownMenuItem>
                         <User />
                         <span>Profile</span>
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <CreditCard />
-                        <span>Billing</span>
-                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Settings />
-                        <span>Settings</span>
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
+                    <Link className="w-full" href={"/protected/parent/addmoney"}>
+                        <DropdownMenuItem className="flex gap-3">
+                            <CreditCard />
+                            <span>Billing</span>
+                        </DropdownMenuItem>
+                    </Link>
+                    <Link href={"/protected/parent/req"}>
+                        <DropdownMenuItem>
+                            <PhoneIncoming />
+                            <span>See Requests</span>
+                        </DropdownMenuItem>
+                    </Link>
                     <DropdownMenuItem>
                         <Keyboard />
                         <span>Keyboard shortcuts</span>
@@ -127,6 +130,6 @@ export async function AccountDropdown() {
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu >
     )
 }

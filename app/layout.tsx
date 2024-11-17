@@ -38,6 +38,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { AccountDropdown } from "@/components/accountDrop";
+import Nav from "@/components/Nav";
 
 
 export default async function RootLayout({
@@ -59,7 +60,6 @@ export default async function RootLayout({
                             <header className="flex justify-end pr-3">
                                 <AccountDropdown />
                             </header>
-                            {/* <Nav /> */}
                             {children}
                             <Toaster />
                         </div>
